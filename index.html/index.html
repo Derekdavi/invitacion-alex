@@ -19,7 +19,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
             text-align: center;
         }
 
@@ -43,10 +43,7 @@
         #pantalla-entrada::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 200px;
+            bottom: 0; left: 0; width: 100%; height: 200px;
             background-image: url('./llamas.png');
             background-repeat: repeat-x;
             background-size: contain;
@@ -57,8 +54,7 @@
 
         .logo-aaa {
             position: absolute;
-            top: 20px;
-            left: 50%;
+            top: 20px; left: 50%;
             transform: translateX(-50%);
             width: 250px;
             filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
@@ -70,15 +66,12 @@
             font-size: 60px;
             text-transform: uppercase;
             color: #fff;
-            text-shadow: 
-                0 0 5px #fff, 0 0 10px #fff,
-                0 0 20px #ff3300, 0 0 30px #ff3300, 0 0 40px #ff3300,
-                0 0 55px #ff3300, 0 0 75px #ff3300;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff3300, 0 0 30px #ff3300, 0 0 40px #ff3300, 0 0 55px #ff3300, 0 0 75px #ff3300;
             -webkit-text-stroke: 1px #880000;
             filter: drop-shadow(0 0 15px rgba(255,100,0,0.5));
             z-index: 4;
-            margin-bottom: 30px;
-            margin-top: 80px;
+            margin-bottom: 30px; margin-top: 80px;
+            padding: 0 10px;
         }
 
         .luchador {
@@ -96,20 +89,13 @@
         .luchador-4 { right: 5%; bottom: 5%; transform: scale(1.1); z-index: 4;}
 
         .focos {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 2;
         }
 
         .foco {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: #ff3300;
-            border-radius: 50%;
-            opacity: 0;
+            position: absolute; width: 15px; height: 15px;
+            background-color: #ff3300; border-radius: 50%; opacity: 0;
             animation: parpadeo_foco 0.5s infinite alternate;
         }
 
@@ -124,28 +110,16 @@
             position: relative;
             background-image: url('./letrero_metalico.png'); 
             background-color: rgba(30, 0, 0, 0.9);
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 380px;
-            height: 100px;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 4px solid #ff0000;
-            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+            width: 380px; max-width: 90%; height: 100px;
+            border-radius: 15px; overflow: hidden;
+            border: 4px solid #ff0000; box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
             animation: parpadeo_neon 0.2s infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-            z-index: 6;
-            margin-top: 20px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: transform 0.2s; z-index: 6; margin-top: 20px;
         }
 
-        .letrero-metalico:hover {
-            transform: scale(1.05);
-        }
+        .letrero-metalico:hover { transform: scale(1.05); }
 
         @keyframes parpadeo_neon {
             0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
@@ -154,23 +128,16 @@
         }
 
         .boton-texto {
-            font-family: 'Anton', sans-serif;
-            font-size: 32px;
-            color: #fff;
-            text-transform: uppercase;
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffcc00;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
-            letter-spacing: 2px;
+            font-family: 'Anton', sans-serif; font-size: 32px; color: #fff;
+            text-transform: uppercase; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffcc00;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8)); letter-spacing: 2px;
         }
 
         .luces-estadio {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            background: 
-                radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 85% 20%, rgba(255, 0, 0, 0.15) 0%, transparent 40%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+            background: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 20%, rgba(255, 0, 0, 0.15) 0%, transparent 40%);
             animation: moverLuces 4s infinite alternate ease-in-out;
         }
 
@@ -181,15 +148,10 @@
 
         .card {
             background: linear-gradient(180deg, #1a0000 0%, #0a0000 100%);
-            border: 5px solid #e60000;
-            border-radius: 20px;
-            padding: 40px 20px;
-            max-width: 500px;
-            width: 90%;
+            border: 5px solid #e60000; border-radius: 20px;
+            padding: 30px 15px; max-width: 500px; width: 90%;
             box-shadow: 0 0 60px rgba(230, 0, 0, 0.8), inset 0 0 20px rgba(255, 204, 0, 0.1);
-            position: relative;
-            z-index: 10;
-            display: none; 
+            position: relative; z-index: 10; display: none; margin: 20px 0;
         }
 
         .mostrar-card {
@@ -198,119 +160,60 @@
         }
 
         h1.titulo-evento {
-            font-size: 3.5em;
-            color: #ffcc00;
-            text-transform: uppercase;
-            text-shadow: 4px 4px 0 #cc0000, 0 0 25px #ffcc00;
-            margin: 0 0 10px;
-            line-height: 1.1;
+            font-size: 3.5em; color: #ffcc00; text-transform: uppercase;
+            text-shadow: 4px 4px 0 #cc0000, 0 0 25px #ffcc00; margin: 0 0 10px; line-height: 1.1;
         }
 
         h2.festejado {
-            font-size: 2.3em;
-            color: #ffffff;
-            text-shadow: 3px 3px 6px #000;
-            margin: 10px 0 0px;
+            font-size: 2.3em; color: #ffffff; text-shadow: 3px 3px 6px #000; margin: 10px 0 0px;
         }
 
         .mensaje-cumple {
-            font-family: 'Arial', sans-serif;
-            font-size: 1.1em;
-            color: #ffcc00;
-            font-style: italic;
-            margin: 15px 0 20px;
-            text-shadow: 1px 1px 3px #000;
-            line-height: 1.4;
+            font-family: 'Arial', sans-serif; font-size: 1.1em; color: #ffcc00; font-style: italic;
+            margin: 15px 0 20px; text-shadow: 1px 1px 3px #000; line-height: 1.4;
         }
 
         .galeria-alex {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
         }
 
         .foto-interactiva {
-            width: 90px;
-            height: 110px;
-            object-fit: cover;
-            border: 3px solid #ff0000;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            position: relative;
-            z-index: 5;
+            width: 80px; height: 100px; object-fit: cover; border: 3px solid #ff0000; border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; position: relative; z-index: 5;
         }
 
         .foto-interactiva:hover {
-            transform: scale(1.6) rotate(3deg);
-            border-color: #ffcc00;
-            box-shadow: 0 0 30px #ffcc00, 0 0 15px #ff0000;
-            z-index: 50;
+            transform: scale(1.6) rotate(3deg); border-color: #ffcc00;
+            box-shadow: 0 0 30px #ffcc00, 0 0 15px #ff0000; z-index: 50;
         }
 
         .fecha-lugar {
-            font-family: 'Arial', sans-serif;
-            font-size: 1.3em;
-            font-weight: bold;
-            background: rgba(230, 0, 0, 0.85);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 25px auto;
-            border: 3px solid #ffcc00;
-            box-shadow: 0 0 25px #e60000;
+            font-family: 'Arial', sans-serif; font-size: 1.3em; font-weight: bold;
+            background: rgba(230, 0, 0, 0.85); padding: 15px; border-radius: 12px;
+            margin: 20px auto; border: 3px solid #ffcc00; box-shadow: 0 0 25px #e60000;
         }
 
         .rudos {
-            font-size: 1.4em;
-            color: #ff3333;
-            font-style: italic;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px #000;
+            font-size: 1.4em; color: #ff3333; font-style: italic; margin-bottom: 20px; text-shadow: 1px 1px 3px #000;
         }
 
         #nombreInvitado {
-            width: 80%;
-            padding: 12px;
-            font-size: 1.2em;
-            font-family: 'Arial', sans-serif;
-            font-weight: bold;
-            text-align: center;
-            border: 3px solid #ffcc00;
-            border-radius: 10px;
-            background: #111;
-            color: #fff;
-            margin-bottom: 20px;
-            outline: none;
-            box-shadow: inset 0 0 10px #000;
+            width: 90%; padding: 12px; font-size: 1.1em; font-family: 'Arial', sans-serif; font-weight: bold;
+            text-align: center; border: 3px solid #ffcc00; border-radius: 10px; background: #111; color: #fff;
+            margin-bottom: 20px; outline: none; box-shadow: inset 0 0 10px #000; box-sizing: border-box;
         }
 
-        #nombreInvitado::placeholder {
-            color: #888;
-            font-weight: normal;
-        }
+        #nombreInvitado::placeholder { color: #888; font-weight: normal; }
 
         .btn-confirmar {
-            background: linear-gradient(90deg, #ffcc00, #ff9900);
-            color: #000;
-            border: 3px solid #fff;
-            padding: 15px 40px;
-            font-size: 1.8em;
-            font-family: 'Impact', sans-serif;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.6);
+            background: linear-gradient(90deg, #ffcc00, #ff9900); color: #000; border: 3px solid #fff;
+            padding: 15px 30px; font-size: 1.5em; font-family: 'Impact', sans-serif; text-transform: uppercase;
+            cursor: pointer; border-radius: 50px; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(255, 204, 0, 0.6);
         }
 
         .btn-confirmar:hover {
-            transform: scale(1.1) translateY(-5px);
-            background: #fff;
-            color: #e60000;
-            border-color: #e60000;
+            transform: scale(1.1) translateY(-5px); background: #fff; color: #e60000; border-color: #e60000;
             box-shadow: 0 15px 35px rgba(255, 255, 255, 0.9);
         }
 
@@ -320,9 +223,7 @@
             100% { transform: scale(1) translateY(0) rotate(0); opacity: 1; }
         }
 
-        .shake {
-            animation: shake 0.5s;
-        }
+        .shake { animation: shake 0.5s; }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -331,17 +232,31 @@
         }
 
         #mensaje-exito {
-            display: none;
-            margin-top: 25px;
-            font-size: 1.8em;
-            color: #00ff00;
-            text-shadow: 0 0 15px #00ff00;
-            animation: popIn 0.5s ease forwards;
+            display: none; margin-top: 25px; font-size: 1.5em; color: #00ff00;
+            text-shadow: 0 0 15px #00ff00; animation: popIn 0.5s ease forwards;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* --- ADAPTACIÓN PARA CELULARES (Responsive Design) --- */
+        @media (max-width: 768px) {
+            .logo-aaa { width: 150px; top: 10px; }
+            .cabecera-texto { font-size: 35px; margin-top: 100px; margin-bottom: 20px; }
+            .luchador { max-height: 45vh; opacity: 0.8; }
+            .luchador-1 { left: -10%; top: 20%; }
+            .luchador-2 { left: -10%; bottom: 10%; }
+            .luchador-3 { right: -10%; top: 20%; }
+            .luchador-4 { right: -10%; bottom: 10%; }
+            .letrero-metalico { height: 80px; margin-top: 10px; }
+            .boton-texto { font-size: 22px; }
+            h1.titulo-evento { font-size: 2.2em; }
+            h2.festejado { font-size: 1.8em; }
+            .mensaje-cumple { font-size: 1em; }
+            .fecha-lugar { font-size: 1.1em; padding: 10px; }
+            .rudos { font-size: 1.2em; }
+            .foto-interactiva { width: 65px; height: 85px; }
+            #pantalla-entrada::after { height: 120px; }
+            body { align-items: flex-start; padding-top: 20px; }
         }
     </style>
 </head>
@@ -374,7 +289,7 @@
 
     <div class="card" id="invitacion-card">
         <h1 class="titulo-evento">¡LUCHA DE<br>CAMPEONATO!</h1>
-        <h2 class="festejado">Festejando a Alexander sus XV</h2>
+        <h2 class="festejado">Festejando a Alexander</h2>
 
         <p class="mensaje-cumple">
             ¡Feliz cumpleaños, campeón! 🎉 Que inicie una nueva etapa llena de éxitos ahora que pasas a la prepa. ¡Que sigan los grandes triunfos en el ring de la vida!
@@ -386,7 +301,7 @@
             <img src="image_b7af93.jpg" alt="Alexander niño traje" class="foto-interactiva">
         </div>
         
-        <p style="font-size: 1.3em;">¡Prepárate para la mejor función del año!</p>
+        <p style="font-size: 1.1em; font-weight: bold;">¡Prepárate para la mejor función del año!</p>
         
         <div class="fecha-lugar">
             📅 Sábado 12 de Septiembre te esperamos a las 3:00<br><br>
@@ -414,6 +329,7 @@
             pantalla.style.opacity = '0';
             setTimeout(() => {
                 pantalla.style.display = 'none';
+                window.scrollTo(0, 0); // Asegura que la pantalla empiece arriba en celulares
             }, 1000);
 
             const card = document.getElementById('invitacion-card');
@@ -431,15 +347,12 @@
                 return;
             }
 
-            // Crear el enlace directo a tu WhatsApp con la información
             const mensaje = `✅ *NUEVA CONFIRMACIÓN DE ASISTENCIA* ✅%0A%0A*Nombre:* ${nombre}%0A*Estado:* Confirmado para la función de Alexander.`;
             const numeroWhatsApp = "525564401889";
             const enlaceWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
             
-            // Abrir WhatsApp en una nueva pestaña
             window.open(enlaceWhatsApp, '_blank');
 
-            // Animaciones
             const card = document.getElementById('invitacion-card');
             const boton = document.getElementById('btn-asistir');
             const mensajeExito = document.getElementById('mensaje-exito');
