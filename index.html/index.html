@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Lucha de Campeonato - Festejando a Alexander!</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Impact', 'Arial Black', sans-serif;
+            background-color: #050000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #pantalla-entrada {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, #1a1a1a 0%, #333 100%);
+            background-image: url('./textura_ring.jpg'); 
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease;
+            overflow: hidden;
+        }
+
+        #pantalla-entrada::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background-image: url('./llamas.png');
+            background-repeat: repeat-x;
+            background-size: contain;
+            opacity: 0.9;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .logo-aaa {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+            z-index: 5;
+        }
+
+        .cabecera-texto {
+            font-family: 'Anton', sans-serif;
+            font-size: 60px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff, 0 0 10px #fff,
+                0 0 20px #ff3300, 0 0 30px #ff3300, 0 0 40px #ff3300,
+                0 0 55px #ff3300, 0 0 75px #ff3300;
+            -webkit-text-stroke: 1px #880000;
+            filter: drop-shadow(0 0 15px rgba(255,100,0,0.5));
+            z-index: 4;
+            margin-bottom: 30px;
+            margin-top: 80px;
+        }
+
+        .luchador {
+            position: absolute;
+            width: auto;
+            max-height: 75vh;
+            z-index: 3;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.8));
+            pointer-events: none;
+        }
+
+        .luchador-1 { left: 2%; top: 10%; transform: scale(0.9); }
+        .luchador-2 { left: 5%; bottom: 5%; transform: scale(1.1); z-index: 4;}
+        .luchador-3 { right: 2%; top: 10%; transform: scale(0.9); }
+        .luchador-4 { right: 5%; bottom: 5%; transform: scale(1.1); z-index: 4;}
+
+        .focos {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .foco {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #ff3300;
+            border-radius: 50%;
+            opacity: 0;
+            animation: parpadeo_foco 0.5s infinite alternate;
+        }
+
+        @keyframes parpadeo_foco { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+        .foco-1 { top: 10%; left: 15%; animation-delay: 0.1s; }
+        .foco-2 { top: 15%; right: 10%; animation-delay: 0.2s; }
+        .foco-3 { bottom: 10%; left: 5%; animation-delay: 0.3s; }
+        .foco-4 { bottom: 15%; right: 5%; animation-delay: 0.4s; }
+
+        .letrero-metalico {
+            position: relative;
+            background-image: url('./letrero_metalico.png'); 
+            background-color: rgba(30, 0, 0, 0.9);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 380px;
+            height: 100px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid #ff0000;
+            box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            animation: parpadeo_neon 0.2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 6;
+            margin-top: 20px;
+        }
+
+        .letrero-metalico:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes parpadeo_neon {
+            0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+            50% { border-color: #ffcc00; box-shadow: 0 0 15px #ffcc00, 0 0 25px #ffcc00; }
+            100% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+        }
+
+        .boton-texto {
+            font-family: 'Anton', sans-serif;
+            font-size: 32px;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffcc00;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
+            letter-spacing: 2px;
+        }
+
+        .luces-estadio {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: 
+                radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(255, 0, 0, 0.15) 0%, transparent 40%);
+            animation: moverLuces 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes moverLuces {
+            0% { background-position: -50px 0px; opacity: 0.5; }
+            100% { background-position: 50px 50px; opacity: 1; }
+        }
+
+        .card {
+            background: linear-gradient(180deg, #1a0000 0%, #0a0000 100%);
+            border: 5px solid #e60000;
+            border-radius: 20px;
+            padding: 40px 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 60px rgba(230, 0, 0, 0.8), inset 0 0 20px rgba(255, 204, 0, 0.1);
+            position: relative;
+            z-index: 10;
+            display: none; 
+        }
+
+        .mostrar-card {
+            display: block !important;
+            animation: slamDown 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        h1.titulo-evento {
+            font-size: 3.5em;
+            color: #ffcc00;
+            text-transform: uppercase;
+            text-shadow: 4px 4px 0 #cc0000, 0 0 25px #ffcc00;
+            margin: 0 0 10px;
+            line-height: 1.1;
+        }
+
+        h2.festejado {
+            font-size: 2.3em;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px #000;
+            margin: 10px 0 0px;
+        }
+
+        .mensaje-cumple {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.1em;
+            color: #ffcc00;
+            font-style: italic;
+            margin: 15px 0 20px;
+            text-shadow: 1px 1px 3px #000;
+            line-height: 1.4;
+        }
+
+        .galeria-alex {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .foto-interactiva {
+            width: 90px;
+            height: 110px;
+            object-fit: cover;
+            border: 3px solid #ff0000;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            z-index: 5;
+        }
+
+        .foto-interactiva:hover {
+            transform: scale(1.6) rotate(3deg);
+            border-color: #ffcc00;
+            box-shadow: 0 0 30px #ffcc00, 0 0 15px #ff0000;
+            z-index: 50;
+        }
+
+        .fecha-lugar {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: rgba(230, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px auto;
+            border: 3px solid #ffcc00;
+            box-shadow: 0 0 25px #e60000;
+        }
+
+        .rudos {
+            font-size: 1.4em;
+            color: #ff3333;
+            font-style: italic;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px #000;
+        }
+
+        #nombreInvitado {
+            width: 80%;
+            padding: 12px;
+            font-size: 1.2em;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            text-align: center;
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+            background: #111;
+            color: #fff;
+            margin-bottom: 20px;
+            outline: none;
+            box-shadow: inset 0 0 10px #000;
+        }
+
+        #nombreInvitado::placeholder {
+            color: #888;
+            font-weight: normal;
+        }
+
+        .btn-confirmar {
+            background: linear-gradient(90deg, #ffcc00, #ff9900);
+            color: #000;
+            border: 3px solid #fff;
+            padding: 15px 40px;
+            font-size: 1.8em;
+            font-family: 'Impact', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.6);
+        }
+
+        .btn-confirmar:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: #fff;
+            color: #e60000;
+            border-color: #e60000;
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes slamDown {
+            0% { transform: scale(3) translateY(-100px) rotate(10deg); opacity: 0; }
+            50% { transform: scale(0.9) translateY(10px) rotate(-2deg); opacity: 1; }
+            100% { transform: scale(1) translateY(0) rotate(0); opacity: 1; }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-15px) rotate(-5deg); }
+            40%, 80% { transform: translateX(15px) rotate(5deg); }
+        }
+
+        #mensaje-exito {
+            display: none;
+            margin-top: 25px;
+            font-size: 1.8em;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+            animation: popIn 0.5s ease forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="musicaFondo" src="cancion.mp3" loop preload="auto"></audio>
+
+    <div id="pantalla-entrada">
+        <img src="logotipo_aaa.png" alt="AAA Logo" class="logo-aaa" onerror="this.style.display='none'">
+        <div class="cabecera-texto">¿ESTÁN LISTOS PARA LA FUNCIÓN?</div>
+        
+        <img src="luchador1.png" class="luchador luchador-1" onerror="this.style.display='none'">
+        <img src="luchador2.png" class="luchador luchador-2" onerror="this.style.display='none'">
+        <img src="luchador3.png" class="luchador luchador-3" onerror="this.style.display='none'">
+        <img src="luchador4.png" class="luchador luchador-4" onerror="this.style.display='none'">
+        
+        <div class="focos">
+            <div class="foco foco-1"></div>
+            <div class="foco foco-2"></div>
+            <div class="foco foco-3"></div>
+            <div class="foco foco-4"></div>
+        </div>
+
+        <div class="letrero-metalico" onclick="iniciarExperiencia()">
+            <span class="boton-texto">¡ENTRAR A LA ARENA!</span>
+        </div>
+    </div>
+
+    <div class="luces-estadio"></div>
+
+    <div class="card" id="invitacion-card">
+        <h1 class="titulo-evento">¡LUCHA DE<br>CAMPEONATO!</h1>
+        <h2 class="festejado">Festejando a Alexander sus XV</h2>
+
+        <p class="mensaje-cumple">
+            ¡Feliz cumpleaños, campeón! 🎉 Que inicie una nueva etapa llena de éxitos ahora que pasas a la prepa. ¡Que sigan los grandes triunfos en el ring de la vida!
+        </p>
+
+        <div class="galeria-alex">
+            <img src="image_b7aeff.jpg" alt="Alexander bebé" class="foto-interactiva">
+            <img src="image_b7af3e.jpg" alt="Alexander niño 1" class="foto-interactiva">
+            <img src="image_b7af93.jpg" alt="Alexander niño traje" class="foto-interactiva">
+        </div>
+        
+        <p style="font-size: 1.3em;">¡Prepárate para la mejor función del año!</p>
+        
+        <div class="fecha-lugar">
+            📅 Sábado 12 de Septiembre te esperamos a las 3:00<br><br>
+            📍 Arena: [Cerrada cedros el pino ]
+        </div>
+
+        <p class="rudos">¡Cero Miedo de faltar a esta fiesta espectacular!</p>
+
+        <input type="text" id="nombreInvitado" placeholder="Escribe tu nombre y/o familia...">
+
+        <button class="btn-confirmar" id="btn-asistir" onclick="confirmarAsistencia()">¡CONFIRMAR!</button>
+        
+        <div id="mensaje-exito">
+            ¡ASISTENCIA CONFIRMADA!<br>💥 ¡Te esperamos en el ring! 💥
+        </div>
+    </div>
+
+    <script>
+        function iniciarExperiencia() {
+            const musica = document.getElementById('musicaFondo');
+            musica.volume = 1.0;
+            musica.play().catch(error => console.log("El navegador bloqueó el audio:", error));
+
+            const pantalla = document.getElementById('pantalla-entrada');
+            pantalla.style.opacity = '0';
+            setTimeout(() => {
+                pantalla.style.display = 'none';
+            }, 1000);
+
+            const card = document.getElementById('invitacion-card');
+            card.classList.add('mostrar-card');
+
+            lanzarFuegosArtificiales();
+        }
+
+        function confirmarAsistencia() {
+            const inputNombre = document.getElementById('nombreInvitado');
+            const nombre = inputNombre.value.trim();
+
+            if (nombre === "") {
+                alert("🚨 ¡Un momento! Por favor escribe tu nombre antes de confirmar.");
+                return;
+            }
+
+            // Crear el enlace directo a tu WhatsApp con la información
+            const mensaje = `✅ *NUEVA CONFIRMACIÓN DE ASISTENCIA* ✅%0A%0A*Nombre:* ${nombre}%0A*Estado:* Confirmado para la función de Alexander.`;
+            const numeroWhatsApp = "525564401889";
+            const enlaceWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+            
+            // Abrir WhatsApp en una nueva pestaña
+            window.open(enlaceWhatsApp, '_blank');
+
+            // Animaciones
+            const card = document.getElementById('invitacion-card');
+            const boton = document.getElementById('btn-asistir');
+            const mensajeExito = document.getElementById('mensaje-exito');
+
+            card.classList.add('shake');
+
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({ particleCount: 8, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff0000', '#ffcc00', '#ffffff', '#000000'] });
+                confetti({ particleCount: 8, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff0000', '#ffcc00', '#ffffff', '#000000'] });
+                if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+
+            setTimeout(() => {
+                boton.style.display = 'none';
+                inputNombre.style.display = 'none'; 
+                mensajeExito.style.display = 'block';
+                card.classList.remove('shake');
+            }, 500);
+        }
+
+        function lanzarFuegosArtificiales() {
+            var duration = 2.5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) { return clearInterval(interval); }
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
